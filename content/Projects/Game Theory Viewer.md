@@ -12,6 +12,6 @@ Another goal is to start using tools like Gambit to find solutions to games and 
 ## Logs
 ### 2025-08-02
 - Created the site, but the project is older than that
-- What is done already :
+- What is done already:
 	- MVC architecture for Tkinter with classes
 	- Graphviz image generation from a hardcoded tree
