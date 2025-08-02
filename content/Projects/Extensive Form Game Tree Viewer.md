@@ -1,5 +1,5 @@
 # Extensive Form Game Tree Viewer
-Repo is private for now, might publish later
+> Repo is private for now, might publish later
 ## Overview
 ---
 Small game tree viewer made in Python with Gambit as a game theory library, Graphviz as the visualizer and Tkinter as the simple GUI to show the image of the game tree and display solution and equilibrium informations.
