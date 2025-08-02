@@ -25,11 +25,9 @@ theme:
 
 # Extensions
 markdown_extensions:
-  - footnotes
   # - attr_list
   - pymdownx.arithmatex:
       generic: true
-  # - pymdownx.superfences
   # - pymdownx.details
   # - pymdownx.magiclink
   - pymdownx.tasklist:
@@ -40,14 +38,12 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.tilde
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.superfences
 
   - toc:
       permalink: true
+      toc_depth: 3
+      slugify: !!python/name:pymdownx.slugs.uslugify
 
 plugins:
   - search
@@ -58,3 +54,4 @@ extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
 
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
