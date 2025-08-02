@@ -11,7 +11,7 @@ Notes are written in Obsidian and selected to be published to Github Pages.
 
 ## Table of Content
 ### Projects
-- [[Game Theory Viewer]]
+- [[Extensive Form Game Tree Viewer]]
 
 ### Courses
 
