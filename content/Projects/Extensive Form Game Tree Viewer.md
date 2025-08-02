@@ -13,11 +13,14 @@ Another goal is to start using tools like Gambit to find solutions to games and 
 
 ## Logs
 ---
-### 2025-08-02
+### [2025-08-02]
 - Created the site, but the project is older than that
-- What is done already:
-	- MVC architecture for Tkinter with classes
-	- Graphviz image generation from a hardcoded tree
-	- Rescaling of the image so that it fits on first open
+
+#### ✅ Done
+- MVC architecture for Tkinter with classes
+- Graphviz image generation from a hardcoded tree
+- Rescaling of the image so that it fits on first open
+
+#### 📌 Learned
 - Wanted to add possibility of opening new files and a button to solve, but out of scope.
   It was easier to simply use the GUI as a tool used for each of the tree instead of the trees being included in one GUI
