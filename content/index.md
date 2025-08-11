@@ -16,6 +16,6 @@ Notes are written in Obsidian and selected to be published to Github Pages.
 ### Courses
 
 ### Readings
-- [[Summary|Data Structures and Algorithms in C++]]
+- [[Overview|Data Structures and Algorithms in C++]]
 
 ### CTF
