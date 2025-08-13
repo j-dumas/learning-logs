@@ -11,6 +11,8 @@ By seeing the shape of the tree, I believe it will also help me better understan
 
 Another goal is to start using tools like Gambit to find solutions to games and understand possible resolution techniques and implement ones that are not in the available libraries from articles I've read while researching the topic.
 
+> Side goal: develop my Python and software architecture experience
+
 ## Logs
 ---
 ### [2025-08-02]
