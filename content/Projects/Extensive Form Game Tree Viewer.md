@@ -27,7 +27,12 @@ Another goal is to start using tools like Gambit to find solutions to games and 
 
 ### [2025-08-12]
 - Strongly considering ditching the project and using Gambit's own GUI.
-  Might finish the translation between Gambit and Graphviz, implement a simple backward induction and then work with Gambit's GUI until games become too big for it and I come back here.
+  Might finish the translation between Gambit and Graphviz, implement a simple backward induction and then work with Gambit's GUI until games become too big for it and I come back here
+  
+> Edit: The UI is weird to use and does not include every solvers available, like enumpure.
+> Will continue implementing Gambit and Graphviz for now to develop my experience
+
+- I will study Nashpy to see their algorithms and implementations too, they will be simpler than trying to understand the convoluted and undocumented code of Gambit
 
 #### ✅ Done
 - Added entirety of choices made by Minimax, hardcoded, to see what the complete SPNEs would be like.
@@ -40,9 +45,10 @@ Another goal is to start using tools like Gambit to find solutions to games and 
   This means that if an equilibrium never reaches a state that has two actions, there will be two equilibria, one for each action since they are included in the optimal strategies
 - Outcomes are objects with stored payoffs that also include a label, making them reusable.
   For example, Nim has two outcomes, -1 and +1, that are reused at each terminal nodes
-- Added two scripts from Gambit's source code that build Nim games as trees and converted it to Python3
+- Added two scripts from Gambit's source code that build Nim games as trees and  *started* converting it to Python3
 
 #### 🎯Challenges
 - Accessing the payoffs means indexing the Outcome object by the Player.
   No way to get the array directly, meaning I need to iterate on each player.
   It seems to be excessively slow, maybe because of Cython bindings
+- **Don't forget to refactor and document...**
