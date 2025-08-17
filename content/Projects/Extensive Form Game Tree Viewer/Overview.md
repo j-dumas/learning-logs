@@ -14,13 +14,13 @@ Another goal is to start using tools like Gambit to find solutions to games and 
 
 > Side goal: develop my Python and software architecture experience
 
-## 📌 Learned 
+## Overall
 ---
+> [[Project Logs|Details of the progress]]
+### 📌 Learned 
 - Possible strategies are the cross-products of the actions, so NEs (Nash Equilibria) and SPNEs (Subgame Perfect Nash Equilibria) are multiplied by actions never reached
 
-## 🎯Challenges
----
+### 🎯Challenges
 - Accessing the payoffs means indexing the Outcome object by the Player.
   No way to get the array directly, meaning I need to iterate on each player
 
-[[Project Logs|Details of the progress]]
