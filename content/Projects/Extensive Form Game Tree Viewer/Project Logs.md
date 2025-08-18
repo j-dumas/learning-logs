@@ -1,40 +1,11 @@
-# Logs
-### [2025-08-02]
-- Created the site, but the project is older than that
+# Project Logs
+### [2025-08-18]
+- Scraped the old Python version to start a new C++ version from scratch.
+- Will need to setup a container for running a clean Linux machine with Distrobox and later possibly interface with Windows too. At this time I would probably separate OSs concerns so the rest of the project shares the same code
+- Will also need to implement a simple tree structure to work with that supports outcome and, later, information sets
+
+#### 💡Ideas
+- It would be interesting to also have a tool to create trees based on simple rules instead of hardcoding them
 
 #### ✅ Done
-- MVC architecture for Tkinter with classes
-- Graphviz image generation from a hardcoded tree
-- Rescaling of the image so that it fits on first open
-
-#### 📌 Learned
-- Wanted to add possibility of opening new files and a button to solve, but out of scope.
-  It was easier to simply use the GUI as a tool used for each of the tree instead of the trees being included in one GUI
-
-### [2025-08-12]
-- Strongly considering ditching the project and using Gambit's own GUI.
-  Might finish the translation between Gambit and Graphviz, implement a simple backward induction and then work with Gambit's GUI until games become too big for it and I come back here
-  
-> Edit: The UI is weird to use and does not include every solvers available, like enumpure.
-> Will continue implementing Gambit and Graphviz for now to develop my experience
-
-- I will study Nashpy to see their algorithms and implementations too, they will be simpler than trying to understand the convoluted and undocumented code of Gambit
-
-#### ✅ Done
-- Added entirety of choices made by Minimax, hardcoded, to see what the complete SPNEs would be like.
-  This was removed further in the day in favor or using Gambit
-- Started reading Gambit's C++ source code to see how outcomes were implemented as to understand what their roles was versus payoffs
-- Added opening of an Extended Form Game (`.efg`) with Gambit and displaying of the root node with player and label
-
-#### 📌 Learned
-- Possible strategies are the cross-products of the actions, so NEs (Nash Equilibria) and SPNEs (Subgame Perfect Nash Equilibria) are multiplied by actions never reached.
-  This means that if an equilibrium never reaches a state that has two actions, there will be two equilibria, one for each action since they are included in the optimal strategies
-- Outcomes are objects with stored payoffs that also include a label, making them reusable.
-  For example, Nim has two outcomes, -1 and +1, that are reused at each terminal nodes
-- Added two scripts from Gambit's source code that build Nim games as trees and *started* converting it to Python3
-
-#### 🎯Challenges
-- Accessing the payoffs means indexing the Outcome object by the Player.
-  No way to get the array directly, meaning I need to iterate on each player.
-  It seems to be excessively slow, maybe because of Cython bindings
-- **Don't forget to refactor and document...**
+- Started this log
