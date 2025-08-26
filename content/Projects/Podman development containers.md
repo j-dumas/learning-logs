@@ -114,7 +114,7 @@ RUN pacman -Scc --noconfirm
 USER jdumas
 ```
 
-This is the Containerfile for the [[Site/publish/Projects/Extensive Form Game Tree Viewer/Overview|Tree Viewer project]].
+This is the Containerfile for the [[EFGTV - Overview|Tree Viewer project]].
 I would create the container by calling the script like this from the project directory :
 ```bash
 devenv tree_viewer .

@@ -18,7 +18,7 @@ Another goal is to start learning common solving techniques and others from arti
 
 ## Progress
 ---
-> [[Project Logs|Details of the progress]]
+> [[EFGTV - Project Logs|Details of the progress]]
 ### 📌 Learned 
 - How to use Distrobox
 
