@@ -23,3 +23,8 @@ For reference, I will be using Distrobox to run a clean Arch Linux container int
 - How to use Distrobox to create an Arch Linux container
 - How to install additional packages on container creation
 - How to enter, stop and delete a container
+
+---
+### [2025-08-25]
+Distrobox did not let me stop mounting the whole home folder for more isolation for my development environment, so I switch to directly using Podman.
+[[Podman development containers|Here are the details for this part]]
