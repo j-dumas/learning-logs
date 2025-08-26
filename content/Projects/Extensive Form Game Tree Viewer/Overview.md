@@ -16,7 +16,7 @@ Another goal is to start learning common solving techniques and others from arti
 
 > Side goal: develop my C++ and software architecture experience
 
-## Overall
+## Progress
 ---
 > [[Project Logs|Details of the progress]]
 ### 📌 Learned 
