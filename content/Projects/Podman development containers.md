@@ -10,6 +10,7 @@ I also looked at Distrobox, but I wanted more isolation for my home directory.
 ## Goal
 ---
 The goal of this project is to learn containerization and Podman, but mostly have a working and clean development environment for developing other projects without installing dependencies on my host system.
+I also wanted the possibility to have a base environment with my tools that I can add to for specific projects.
 
 ## Progress
 ---
@@ -126,7 +127,20 @@ podman start -ia tree_viewer
 ```
 
 ### 📌 Learned 
-- Incoming
+- How to create a new user and how to install packages in a Containerfile
+- How to build and check for image existence
+- How to bind mount volumes and set correct owner
+- How to use default parameters in a bash script and how to use `getopts`
+- Learned a lot about Podman and isolation
 
 ### 🎯Challenges
-- Incoming
+- How to take a path or use a default path? 
+  Use bash variable expansion with `realpath` and `pwd`
+- How to build a base image if it does not already exist?
+  `podman image exists`
+- What if I want to use de base image for the container and not another one built on top?
+  New flag parameter with `getopts`
+- How do I make Neovim's plugins installation faster for each container, instead of reinstalling each time, without compromising my host installation?
+  Mount a custom folder for storing the containers' data separate from the host so installation is done only once
+- Mounted volumes are own by root by default, which mean Neovim cannot install its plugins.
+  Needed to match the host UID/GID inside the container using `--userns=keep-id` and by creating needed parent folders in the image creation
