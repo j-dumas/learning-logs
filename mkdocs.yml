@@ -7,29 +7,27 @@ theme:
     name: 'material'
     icon:
       logo: material/file-code-outline
+
+    features:
+        - navigation.tabs
     palette:
-
-    # Light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: pink
-      accent: indigo
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-
-    # Dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: deep purple
-      accent: teal
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
-
-nav:
-    - Home: index.md
-    - Projects: Projects/
+        # Light mode
+        - media: "(prefers-color-scheme: light)"
+          scheme: default
+          primary: pink
+          accent: indigo
+          toggle:
+            icon: material/toggle-switch-off-outline
+            name: Switch to dark mode
+    
+        # Dark mode
+        - media: "(prefers-color-scheme: dark)"
+          scheme: slate
+          primary: deep purple
+          accent: teal
+          toggle:
+            icon: material/toggle-switch
+            name: Switch to light mode
 
 # Extensions
 markdown_extensions:
@@ -55,6 +53,7 @@ extra_javascript:
   - javascripts/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
 
 
 
