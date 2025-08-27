@@ -2,11 +2,14 @@ site_name: Learning Logs
 docs_dir: content
 site_url: https://j-dumas.github.io/learning-logs/
 site_description: My journey of learning
+repo_url: https://github.com/j-dumas
+repo_name: github.com/j-dumas
 
 theme:
     name: 'material'
     icon:
       logo: material/file-code-outline
+      repo: fontawesome/brands/github
 
     features:
         - navigation.tabs
@@ -31,11 +34,12 @@ theme:
 
 # Extensions
 markdown_extensions:
+  - def_list
+  - meta
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.tasklist:
       custom_checkbox: true
-  - def_list
   - pymdownx.caret
   - pymdownx.keys
   - pymdownx.tilde
@@ -53,6 +57,7 @@ extra_javascript:
   - javascripts/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
 
 
 
