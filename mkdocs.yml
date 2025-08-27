@@ -1,5 +1,7 @@
 site_name: Learning Logs
 docs_dir: content
+site_url: https://j-dumas.github.io/learning-logs/
+site_description: My journey of learning
 
 theme:
     name: 'material'
@@ -25,20 +27,19 @@ theme:
         icon: material/toggle-switch
         name: Switch to light mode
 
+nav:
+    - Home: index.md
+    - Projects: Projects/
+
 # Extensions
 markdown_extensions:
-  # - attr_list
   - pymdownx.arithmatex:
       generic: true
-  # - pymdownx.details
-  # - pymdownx.magiclink
   - pymdownx.tasklist:
       custom_checkbox: true
   - def_list
-  - pymdownx.critic
   - pymdownx.caret
   - pymdownx.keys
-  - pymdownx.mark
   - pymdownx.tilde
   - pymdownx.superfences
 
@@ -53,7 +54,7 @@ plugins:
 extra_javascript:
   - javascripts/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
-
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
 
 
