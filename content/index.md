@@ -17,8 +17,9 @@ Notes are written in Obsidian and selected to be published to Github Pages.
 
 ## Table of Content
 ### Projects
+- [[Projects - Overview|Overview]]
 - [[EFGTV - Overview|Extensive Form Game Tree Viewer]]
-- [[Podman development containers]]
+- [[Podman Development Containers]]
 
 ### Courses
 
