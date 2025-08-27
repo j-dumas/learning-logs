@@ -1,3 +1,9 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
 # Home
 Welcome to my collection of learning notes.
 I document my learning experience with various subjects, including my Master's Degree in ICS Security.
