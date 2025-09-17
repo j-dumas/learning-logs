@@ -16,13 +16,13 @@ Notes are written in Obsidian and selected to be published to Github Pages.
 
 ## Table of Content
 ### Projects
-- [[Projects - Overview|Overview]]
-- [[EFGTV - Overview|Extensive Form Game Tree Viewer]]
-- [[Podman Development Containers]]
+- [[projects-overview|Overview]]
+- [[efgtv-overview|Extensive Form Game Tree Viewer]]
+- [[podman-devcontainers]]
 
 ### Courses
 
 ### Readings
-- [[DSACPP - Overview|Data Structures and Algorithms in C++]]
+- [[dsacpp-overview|Data Structures and Algorithms in C++]]
 
 ### CTF
