@@ -4,7 +4,7 @@
 ## Summary
 ---
 I am adding a base Containerfile (Dockerfile) and a script to create Podman containers with images based on the base Containerfile to create development environments as containers.
-It came from wanting DevContainers without having to use VSCode (I know there are Neovim features, but stil...). 
+It came from wanting DevContainers without having to use VSCode (I know there are Neovim features, but still...). 
 I also looked at Distrobox, but I wanted more isolation for my home directory.
 
 ## Goal

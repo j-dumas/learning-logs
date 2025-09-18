@@ -20,7 +20,7 @@ Another goal is to start learning common solving techniques and others from arti
 ---
 > [[efgtv-project-logs|Details of the progress]]
 ### 📌 Learned 
-- How to use Distrobox
+- How to use Podman for containerization ([[podman-devcontainers|Podman Development Containers project]])
 
 ### 🎯Challenges
 
