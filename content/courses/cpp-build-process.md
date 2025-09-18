@@ -3,7 +3,9 @@ aliases:
   - C++ Build Process
 ---
 # C++ Build Process
-> From https://www.studyplan.dev/cmake/cpp-build-process
+> From [studyplan.dev](https://www.studyplan.dev/cmake/cpp-build-process)
+
+This course is about how to use CMake to build C++ projects.
 
 We learned C++ in my degree, but never how to use CMake (maybe because my already credited courses from my previous DEC talked about it). I actually used it a bit in an internship to build a program running on multiple ESP32s with the ESP-IDF.
 
