@@ -34,6 +34,8 @@ theme:
 
 # Extensions
 markdown_extensions:
+  - nl2br
+  - admonition
   - def_list
   - meta
   - pymdownx.arithmatex:
@@ -44,6 +46,8 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.tilde
   - pymdownx.superfences
+  - pymdownx.details
+
 
   - toc:
       toc_depth: 3
@@ -53,6 +57,7 @@ plugins:
   - search
   - roamlinks
   - awesome-nav
+  - callouts
 
 extra_javascript:
   - javascripts/mathjax.js
@@ -61,6 +66,7 @@ extra_javascript:
 
 extra_css:
   - css/extra.css
+
 
 
 
