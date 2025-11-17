@@ -37,13 +37,13 @@ This chapter presents the organization of a C++ project as well as build systems
 - Limitations of Makefiles and IDE Project files such as vendor lock-in, dependency on GUI or the monolithic unreadable single **Makefile** and duplication when splitting it
 
 ---
-### Introducing **CMake**
+### Chapter 3 - Introducing **CMake**
 As said before, I had already used **CMake** in an intership before and was already a familiar with the basics. I therefore did not learn much about the basic commands like `add_executable`, `add_library`, `target_link_libraries`, etc.
 
-I did learn more reasons to why **CMake** and little tips about structure and versions.
+I did learn more reasons as to why use **CMake** and little tips about structure and versions.
 
 #### 📌 Learned 
-- Why **CMake**: *portability*, *reproducibility* and *consistency*, and *maintainability* and *scalability*
+- Why **CMake**? *portability*, *reproducibility* and *consistency*, and *maintainability* and *scalability*
 - **CMake** alternatives such as **Bazel** or **Meson**, but **CMake** remains the most widely adopted
 - Tips on choosing a version of **CMake**: 
 	- Old enough to be compatible with most tools
@@ -51,7 +51,7 @@ I did learn more reasons to why **CMake** and little tips about structure and ve
 - Tips about choosing the `target_` version of a command: *granularity*, *clarity* and *transitivity*
 
 > [!tip] `compile_commands` 
-> To generate a `compile_commands.json` file to be used by the `clangd` LSP for ease of programming (auto-completion, linting, etc.) add 
+> To generate a `compile_commands.json` file to be used by the `clangd` LSP for ease of programming (auto-completion, linting, etc.), add 
 > ```cmake
 > set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 > ```
