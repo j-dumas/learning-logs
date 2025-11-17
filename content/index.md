@@ -22,7 +22,7 @@ Notes are written in Obsidian and selected to be published to Github Pages.
 - [[podman-devcontainers|Podman Development Containers]]
 
 ### Courses
-- [[cpp-build-process|C++ Build Process]]
+- [[managing-cpp-cmake|Managing C++ Projects Using CMake]]
 
 ### Readings
 - [[dsacpp-overview|Data Structures and Algorithms in C++]]
