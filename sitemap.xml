@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://j-dumas.github.io/learning-logs/</loc>
+         <lastmod>2025-11-17</lastmod>
+    </url>
+    <url>
+         <loc>https://j-dumas.github.io/learning-logs/courses/managing-cpp-cmake/</loc>
+         <lastmod>2025-11-17</lastmod>
+    </url>
+    <url>
+         <loc>https://j-dumas.github.io/learning-logs/projects/podman-devcontainers/</loc>
+         <lastmod>2025-11-17</lastmod>
+    </url>
+    <url>
+         <loc>https://j-dumas.github.io/learning-logs/projects/projects-overview/</loc>
+         <lastmod>2025-11-17</lastmod>
+    </url>
+    <url>
+         <loc>https://j-dumas.github.io/learning-logs/readings/dsa-cpp/dsacpp-overview/</loc>
+         <lastmod>2025-11-17</lastmod>
+    </url>
+</urlset>
