@@ -14,6 +14,7 @@ I also wanted the possibility to have a base environment with my tools that I ca
 
 ## Progress
 ---
+### [2025-08-25]
 Here is the base Containerfile based on Arch Linux.
 I mostly install needed packages and create a user and a nice prompt.
 ```Dockerfile
@@ -126,14 +127,14 @@ I can then start it with
 podman start -ia tree_viewer
 ```
 
-### 📌 Learned 
+#### 📌 Learned 
 - How to create a new user and how to install packages in a Containerfile
 - How to build and check for image existence
 - How to bind mount volumes and set correct owner
 - How to use default parameters in a bash script and how to use `getopts`
 - Learned a lot about Podman and isolation
 
-### 🎯Challenges
+#### 🎯 Challenges
 - How to take a path or use a default path? 
   Use bash variable expansion with `realpath` and `pwd`
 - How to build a base image if it does not already exist?
@@ -144,3 +145,51 @@ podman start -ia tree_viewer
   Mount a custom folder for storing the containers' data separate from the host so installation is done only once
 - Mounted volumes are own by root by default, which mean Neovim cannot install its plugins.
   Needed to match the host UID/GID inside the container using `--userns=keep-id` and by creating needed parent folders in the image creation
+
+### ### [2026-02-06]
+I changed the script to be able to bind a port
+The parsing of the arguments is now
+```bash
+while getopts "np:" opt; do 
+    case ${opt} in 
+        n) NO_NEW_IMG=true;;
+        p) PORTS="127.0.0.1:$OPTARG";; # Stay on localhost
+    esac
+done
+shift $(($OPTIND - 1))
+```
+and the command to create the container
+```bash
+# Create container with correct image, volumes and namespace
+CMD="podman start -t --name $NAME \
+    --userns=keep-id \
+    -v $HOME/.config/nvim:/home/jdumas/.config/nvim \
+    -v $HOME/.local/dev/nvim-container-share:/home/jdumas/.local/share/nvim \
+    -v $PROJECT_PATH:/home/jdumas/src \
+    -h $NAME"
+
+if [[ -n "$PORTS" ]]; then
+  CMD="$CMD -p $PORTS"
+fi
+
+CMD="$CMD $IMG_NAME"
+eval $CMD
+```
+
+I can now also connect multiple times with
+```bash
+podman exec -it mycontainer /bin/zsh
+```
+
+#### 📌 Learned
+- How to parse multiple arguments with options, although I can only take one port binding (`-p`) for the moment
+- How to safely bind a port to the host from the container
+- How to connect multiple time to the container
+
+#### 🎯 Challenges
+- How do you bind a port safely?
+  Use `-p 127.0.0.1<host_port:container_port>` to forward a port on the localhost only
+- How do you conditionally add a parameter to the final command?
+  By concatenating the different parts of the command and running `eval`
+- How do you detach from the container without stopping it?
+  Use `CTRL-P CTRL-Q` to detach from the main thread
