@@ -144,7 +144,7 @@ podman exec -it mycontainer /bin/zsh
 ---
 /// html | details
 /// html | summary
-Progress
+Click to show
 ///
 ### [2025-08-25]
 #### 📌 Learned 

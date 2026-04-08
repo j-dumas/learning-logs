@@ -24,5 +24,7 @@ Notes are written in Obsidian and selected to be published to Github Pages.
 ### Courses
 - [[managing-cpp-cmake|Managing C++ Projects Using CMake]]
 
-%% ### Readings
-### CTF %%
+<!--
+### Readings
+### CTF
+-->
