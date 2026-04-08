@@ -140,11 +140,11 @@ podman exec -it mycontainer /bin/zsh
 ```
 
 
-/// html | details
-/// html | summary
-
 ## Progress
 ---
+/// html | details
+/// html | summary
+Progress
 ///
 ### [2025-08-25]
 #### 📌 Learned 
@@ -166,7 +166,7 @@ podman exec -it mycontainer /bin/zsh
 - Mounted volumes are own by root by default, which mean Neovim cannot install its plugins.
   Needed to match the host UID/GID inside the container using `--userns=keep-id` and by creating needed parent folders in the image creation
 
-### ### [2026-02-06]
+### [2026-02-06]
 I changed the script to be able to bind a port
 #### 📌 Learned
 - How to parse multiple arguments with options, although I can only take one port binding (`-p`) for the moment
