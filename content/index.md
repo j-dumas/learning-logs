@@ -8,20 +8,21 @@ Welcome to my collection of learning notes.
 I document my learning experience with various subjects, including my Master's Degree in ICPS Security.
 Notes are written in Obsidian and selected to be published to Github Pages.
 
-> Disclaimer: these notes were written by hand. No LLM was used to write, even though emojis are used. They are only for fast lookup of the pages and structure.
+> These notes were written by myself following courses, books, etc.
 
-## Topics
+## Topics and Interests
 - Information Security
-- OS dev
+- Linux Kernel
 - Embedded
-- etc.
+- Compilers, Linkers and Loaders
+- Low-Level Code
 
 ## Table of Content
 ### Projects
 - [[projects-overview|Overview]]
 - [[podman-devcontainers|Podman Development Containers]]
 
-### Courses
+### Systems
 - [[managing-cpp-cmake|Managing C++ Projects Using CMake]]
 
 <!--
