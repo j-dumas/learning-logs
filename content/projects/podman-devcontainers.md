@@ -146,6 +146,8 @@ podman exec -it mycontainer /bin/zsh
 /// html | summary
 Click to show
 ///
+
+### Learning Progress
 ### [2025-08-25]
 #### 📌 Learned 
 - How to create a new user and how to install packages in a Containerfile

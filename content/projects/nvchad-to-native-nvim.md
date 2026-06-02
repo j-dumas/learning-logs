@@ -9,6 +9,7 @@ I've wanted for a while now to move from [NvChad](https://nvchad.com/) to a more
 ---
 ### What's Needed?
 To transform Neovim into the experience I had with NvChad, i.e. close to a full IDE, I'll need
+
 - LSP
 - Highlight
 - Autocompletion
@@ -145,6 +146,8 @@ require('lualine').setup({
 /// html | summary
 Click to show
 ///
+
+### Config Progress
 ### [2026-05-25]
 #### 📌 Done 
 - Structure of the config directory so that Neovim can easily pickup my files
