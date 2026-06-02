@@ -146,17 +146,15 @@ podman exec -it mycontainer /bin/zsh
 /// html | summary
 Click to show
 ///
-
-### Learning Progress
-### [2025-08-25]
-#### 📌 Learned 
+#### [2025-08-25]
+##### 📌 Learned 
 - How to create a new user and how to install packages in a Containerfile
 - How to build and check for image existence
 - How to bind mount volumes and set correct owner
 - How to use default parameters in a bash script and how to use `getopts`
 - Learned a lot about Podman and isolation
 
-#### 🎯 Challenges
+##### 🎯 Challenges
 - How to take a path or use a default path? 
   Use bash variable expansion with `realpath` and `pwd`
 - How to build a base image if it does not already exist?
@@ -168,14 +166,14 @@ Click to show
 - Mounted volumes are own by root by default, which mean Neovim cannot install its plugins.
   Needed to match the host UID/GID inside the container using `--userns=keep-id` and by creating needed parent folders in the image creation
 
-### [2026-02-06]
+#### [2026-02-06]
 I changed the script to be able to bind a port
-#### 📌 Learned
+##### 📌 Learned
 - How to parse multiple arguments with options, although I can only take one port binding (`-p`) for the moment
 - How to safely bind a port to the host from the container
 - How to connect multiple time to the container
 
-#### 🎯 Challenges
+##### 🎯 Challenges
 - How do you bind a port safely?
   Use `-p 127.0.0.1<host_port:container_port>` to forward a port on the localhost only
 - How do you conditionally add a parameter to the final command?

@@ -146,14 +146,12 @@ require('lualine').setup({
 /// html | summary
 Click to show
 ///
-
-### Config Progress
-### [2026-05-25]
-#### 📌 Done 
+#### [2026-05-25]
+##### 📌 Done 
 - Structure of the config directory so that Neovim can easily pickup my files
 
-### [2026-06-02]
-#### 📌 Done 
+#### [2026-06-02]
+##### 📌 Done 
 - Default options similar to NvChad
 - Highlight autocommand to see what was yanked
 - Configuration of the colorscheme and lualine to fit together how I wanted
