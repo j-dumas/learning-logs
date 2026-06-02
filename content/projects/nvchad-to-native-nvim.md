@@ -3,7 +3,7 @@
 
 ## Summary
 ---
-I've wanted for a while now to move from [NvChad](https://nvchad.com/) to a more simple and personalized Neovim config. I thus decided to redo all my config in the new Neovim 0.12 from scratch by readding only what i need and throwing out the rest, things like `nvim-treesitter`, `mason` and `mason-lspconfig`, `lazy`, etc.
+I've wanted for a while now to move from [NvChad](https://nvchad.com/) to a more simple and personalized Neovim config. I thus decided to redo all my config in the new Neovim 0.12 from scratch by readding only what I need and throwing out the rest, things like `mason` and `mason-lspconfig`, `lazy`, etc.
 
 ## The Config
 ---
@@ -17,6 +17,7 @@ To transform Neovim into the experience I had with NvChad, i.e. close to a full 
 - Statusline
 - Tree
 - Something to search for files like Telescope or fzf-lua
+
 ### Structure
 Let's start with the structure of the config directory:
 ```txt
@@ -39,8 +40,7 @@ Let's start with the structure of the config directory:
 ```
 
 ### Options
-Here are the options I used.
-These were taken from the NvChad config to have a similar feel and also from [a list of the most common options in Neovim](https://dotfiles.substack.com/p/neovim-options-the-most-common-ones)
+Here are the options I used. These were taken from the NvChad config to have a similar feel and also from [a list of the most common options in Neovim](https://dotfiles.substack.com/p/neovim-options-the-most-common-ones).
 ```lua
 require('vim._core.ui2').enable()
 
@@ -90,9 +90,7 @@ vim.pack.add {
     'https://github.com/nvim-lualine/lualine.nvim'
 }
 ```
-Since I already use Catppuccin Mocha nearly everywhere, I installed it for Neovim. 
-For a terminal, I use kitty with a transparent background, so I opted to have Neovim transparent as well.
-I also modified the colors of the sections to fit my tmux look (which is kind of a bastard between the dracula tmux plugin and catppuccin colors).
+Since I already use Catppuccin Mocha nearly everywhere, I installed it for Neovim.  For a terminal, I use kitty with a transparent background, so I opted to have Neovim transparent as well. I also modified the colors of the sections to fit my tmux look (which is kind of a bastard between the dracula tmux plugin and catppuccin colors).
 ```lua
 require("catppuccin").setup({
     flavour = "mocha",
@@ -152,7 +150,7 @@ Click to show
 - Structure of the config directory so that Neovim can easily pickup my files
 
 ### [2026-06-02]
-#### 📌 Learned 
+#### 📌 Done 
 - Default options similar to NvChad
 - Highlight autocommand to see what was yanked
 - Configuration of the colorscheme and lualine to fit together how I wanted
