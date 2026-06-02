@@ -7,6 +7,7 @@ hide:
 Welcome to my collection of learning notes.
 I document my learning experience with various subjects, including my Master's Degree in ICPS Security.
 Notes are written in Obsidian and selected to be published to Github Pages.
+— Jérémy
 
 > These notes were written by myself following courses, books, etc.
 
@@ -21,6 +22,7 @@ Notes are written in Obsidian and selected to be published to Github Pages.
 ### Projects
 - [[projects-overview|Overview]]
 - [[podman-devcontainers|Podman Development Containers]]
+- [[nvchad-to-native-nvim|Neovim 0.12+ Config]]
 
 ### Systems
 - [[managing-cpp-cmake|Managing C++ Projects Using CMake]]
