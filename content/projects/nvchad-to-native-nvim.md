@@ -18,6 +18,7 @@ To transform Neovim into the experience I had with NvChad, i.e. close to a full 
 - Statusline
 - Tree
 - Something to search for files like Telescope or fzf-lua
+- A Git client to not rely on switching tmux panes for lazygit
 
 ### Structure
 Let's start with the structure of the config directory:
@@ -91,11 +92,18 @@ vim.pack.add {
     'https://github.com/nvim-lualine/lualine.nvim'
 }
 ```
-Since I already use Catppuccin Mocha nearly everywhere, I installed it for Neovim.  For a terminal, I use kitty with a transparent background, so I opted to have Neovim transparent as well. I also modified the colors of the sections to fit my tmux look (which is kind of a bastard between the dracula tmux plugin and catppuccin colors).
+Since I already use Catppuccin Mocha nearly everywhere, I installed it for Neovim.  For a terminal, I use kitty with a transparent background, so I opted to have Neovim transparent as well. I also modified the colors of the sections to fit my tmux look (which is kind of a bastard between the dracula tmux plugin and catppuccin colors). I changed some highlights to fit my taste, like the `MatchParen` to remove colors of matching brackets and only keep the background highlight.
 ```lua
 require("catppuccin").setup({
     flavour = "mocha",
     transparent_background = true,
+    custom_highlights = function(colors)
+        local U = require("catppuccin.utils.colors")
+        return {
+            MatchParen = { fg = colors.none, style = {} },
+            IncSearch = { bg = colors.green },
+        }
+    end,
     integrations = {
         lualine = {
             mocha = function(colors)
@@ -121,7 +129,7 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme "catppuccin-nvim"
 ```
-And here is lualine:
+And here is lualine as I like:
 ```lua
 require('lualine').setup({
     options = {
@@ -140,20 +148,55 @@ require('lualine').setup({
 })
 ```
 
-## Progress
----
-/// html | details
-/// html | summary
-Click to show
-///
-#### [2026-05-25]
-##### 📌 Done 
-- Structure of the config directory so that Neovim can easily pickup my files
+### Tree: A File Viewer
+I'm used to having a file viewer in the side bar and did not really want to use `netrw`, so I decided to try [Neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim). I added `nvim-webdev-icons` and `nvim-window-picker` for icons and picking a specific window when opening a file instead of opening in the last one, respectively. I added nicer colors for the window picker because the default was bright green. It's now red with a transparent background. Finally I changed the mappings to always ask which window to open a file when there are splits.
+```lua
+vim.pack.add({
+  {
+    src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
+    version = vim.version.range('3')
+  },
+  -- Dependencies
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/MunifTanjim/nui.nvim",
+  "https://github.com/nvim-tree/nvim-web-devicons",
+  {
+      src = 'https://github.com/s1n7ax/nvim-window-picker', 
+      version = vim.version.range('2.*') 
+  },
+})
 
-#### [2026-06-02]
-##### 📌 Done 
-- Default options similar to NvChad
-- Highlight autocommand to see what was yanked
-- Configuration of the colorscheme and lualine to fit together how I wanted
+require 'window-picker'.setup({
+    hint = 'statusline-winbar',
+    selection_chars = 'ABCDEFGHIJKLMNOP',
+    highlights = {
+        enabled = true,
+        statusline = {
+            unfocused = {
+                fg = '#f38ba8',
+                bg = 'NONE',
+                bold = true,
+            },
+        },
+        winbar = {
+            unfocused = {
+                fg = '#f38ba8',
+                bg = 'NONE',
+                bold = true,
+            },
+        },
+    },
+})
 
-///
+require("neo-tree").setup({
+  window = {
+    mappings = {
+      ["<cr>"] = "open_with_window_picker",
+      ["s"]    = "split_with_window_picker",
+      ["v"]    = "vsplit_with_window_picker",
+      ["S"]    = "noop",
+      ["w"]    = "noop",
+    },
+  },
+})
+```
