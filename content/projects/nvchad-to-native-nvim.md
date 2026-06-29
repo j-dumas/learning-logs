@@ -34,6 +34,8 @@ Let's start with the structure of the config directory:
 	├── plugins/
 	|   ├── init.lua
 	|   ├── fzf-lua.lua
+	|   ├── tree.lua
+	|   ├── treesitter.lua
 	|   └── ui.lua
 	├── autocmds.lua
 	├── keymaps.lua
@@ -199,4 +201,14 @@ require("neo-tree").setup({
     },
   },
 })
+```
+
+### Treesitter: Better Highlighting and Parsers
+Neovim 0.12+ now bundles a couple languages for highlights, but it's not enough. Since [Nvim-Treesitter](https://github.com/nvim-treesitter/nvim-treesitter) is now archived, I installed [`tree-sitter-manager`](https://github.com/romus204/tree-sitter-manager.nvim) and installed a couple languages like `c`, `cpp`, `latex`, `lua` and `python`.
+```lua
+vim.pack.add {
+  { src = "https://github.com/romus204/tree-sitter-manager.nvim" }
+}
+
+require("tree-sitter-manager").setup()
 ```
