@@ -20,7 +20,7 @@ To transform Neovim into the experience I had with NvChad, i.e. close to a full 
 - Something to search for files like Telescope or fzf-lua
 - A Git client to not rely on switching tmux panes for lazygit
 
-### Structure
+### A Clean Structure
 Let's start with the structure of the config directory:
 ```txt
 ~/.config/nvim/
@@ -33,6 +33,7 @@ Let's start with the structure of the config directory:
 	|   └── pylsp.lua
 	├── plugins/
 	|   ├── init.lua
+	|   ├── conform.lua
 	|   ├── fzf-lua.lua
 	|   ├── tree.lua
 	|   ├── treesitter.lua
@@ -43,7 +44,7 @@ Let's start with the structure of the config directory:
 	
 ```
 
-### Options
+### Common Options
 Here are the options I used. These were taken from the NvChad config to have a similar feel and also from [a list of the most common options in Neovim](https://dotfiles.substack.com/p/neovim-options-the-most-common-ones).
 ```lua
 require('vim._core.ui2').enable()
@@ -207,8 +208,37 @@ require("neo-tree").setup({
 Neovim 0.12+ now bundles a couple languages for highlights, but it's not enough. Since [Nvim-Treesitter](https://github.com/nvim-treesitter/nvim-treesitter) is now archived, I installed [`tree-sitter-manager`](https://github.com/romus204/tree-sitter-manager.nvim) and installed a couple languages like `c`, `cpp`, `latex`, `lua` and `python`.
 ```lua
 vim.pack.add {
-  { src = "https://github.com/romus204/tree-sitter-manager.nvim" }
+  "https://github.com/romus204/tree-sitter-manager.nvim"
 }
 
 require("tree-sitter-manager").setup()
 ```
+
+### Conform: A Formatter
+I decided to use [Conform](https://github.com/stevearc/conform.nvim) to invoke formatters in my code and set their settings. I started by configuring `stylua` to then format my config files correctly and thus test if everything works.
+```lua
+vim.pack.add({
+    "https://github.com/stevearc/conform.nvim",
+})
+
+require("conform").setup({
+    formatters_by_ft = {
+        lua = { "stylua" },
+    },
+    default_format_opts = {
+        lsp_format = "fallback",
+    },
+    formatters = {
+        stylua = {
+            prepend_args = { "--indent-type", "Spaces" },
+        },
+    },
+})
+```
+
+
+> [!important] Installing tools
+> I mentioned I wanted to get away from `mason` to install tools like LSPs and formatters. I landed on [Mise](https://mise.jdx.dev/) to install the tools I need on my system and get them in the `$PATH` so that Neovim can find them. It works just like using `npm` or `pip`, but with the recent security track record of the former, I did not want to install my tools with it.
+> 
+> You can install tools like `stylua` with `mise use -g stylua` and `lua_ls` with `muse use -g lua-language-server`.
+
