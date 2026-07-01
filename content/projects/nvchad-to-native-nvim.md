@@ -10,15 +10,16 @@ I've wanted for a while now to move from [NvChad](https://nvchad.com/) to a more
 ### What's Needed?
 To transform Neovim into the experience I had with NvChad, i.e. close to a full IDE, I'll need
 
-- LSP
-- Highlight
-- Autocompletion
-- Formatter/linter
-- Colorscheme
-- Statusline
-- Tree
-- Something to search for files like Telescope or fzf-lua
-- A Git client to not rely on switching tmux panes for lazygit
+- [x] LSP
+- [x] Highlight
+- [ ] Autocompletion
+- [x] Formatter
+- [ ] Linter
+- [x] Colorscheme
+- [x] Statusline
+- [x] Tree
+- [ ] Something to search for files like Telescope or fzf-lua
+- [ ] A Git client to not rely on switching tmux panes for lazygit
 
 ### A Clean Structure
 Let's start with the structure of the config directory:
@@ -26,15 +27,11 @@ Let's start with the structure of the config directory:
 ~/.config/nvim/
 ├── init.lua
 └── lua/
-	├── lsp/
-	|   ├── init.lua
-	|   ├── lua_ls.lua
-	|   ├── clangd.lua
-	|   └── pylsp.lua
 	├── plugins/
 	|   ├── init.lua
 	|   ├── conform.lua
 	|   ├── fzf-lua.lua
+	|   ├── lsp.lua
 	|   ├── tree.lua
 	|   ├── treesitter.lua
 	|   └── ui.lua
@@ -81,6 +78,7 @@ vim.o.scrolloff = 8
 vim.o.signcolumn = "yes"
 vim.o.termguicolors = true
 vim.opt.whichwrap:append "<>[]hl"
+vim.o.winborder = "rounded"
 ```
 
 ### UI: Colorscheme and Statusline
@@ -101,10 +99,11 @@ require("catppuccin").setup({
     flavour = "mocha",
     transparent_background = true,
     custom_highlights = function(colors)
-        local U = require("catppuccin.utils.colors")
         return {
-            MatchParen = { fg = colors.none, style = {} },
+            MatchParen = { fg = colors.none },
             IncSearch = { bg = colors.green },
+            NormalFloat = { bg = colors.none },
+            FloatBorder = { bg = colors.none },
         }
     end,
     integrations = {
@@ -152,7 +151,7 @@ require('lualine').setup({
 ```
 
 ### Tree: A File Viewer
-I'm used to having a file viewer in the side bar and did not really want to use `netrw`, so I decided to try [Neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim). I added `nvim-webdev-icons` and `nvim-window-picker` for icons and picking a specific window when opening a file instead of opening in the last one, respectively. I added nicer colors for the window picker because the default was bright green. It's now red with a transparent background. Finally I changed the mappings to always ask which window to open a file when there are splits.
+I'm used to having a file viewer in the side bar and did not really want to use `netrw`, so I decided to try [`neo-tree`](https://github.com/nvim-neo-tree/neo-tree.nvim). I added `nvim-webdev-icons` and `nvim-window-picker` for icons and picking a specific window when opening a file instead of opening in the last one, respectively. I added nicer colors for the window picker because the default was bright green. It's now red with a transparent background. Finally I changed the mappings to always ask which window to open a file when there are splits.
 ```lua
 vim.pack.add({
   {
@@ -205,7 +204,7 @@ require("neo-tree").setup({
 ```
 
 ### Treesitter: Better Highlighting and Parsers
-Neovim 0.12+ now bundles a couple languages for highlights, but it's not enough. Since [Nvim-Treesitter](https://github.com/nvim-treesitter/nvim-treesitter) is now archived, I installed [`tree-sitter-manager`](https://github.com/romus204/tree-sitter-manager.nvim) and installed a couple languages like `c`, `cpp`, `latex`, `lua` and `python`.
+Neovim 0.12+ now bundles a couple languages for highlights, but it's not enough. Since [`nvim-treesitter`](https://github.com/nvim-treesitter/nvim-treesitter) is now archived, I installed [`tree-sitter-manager`](https://github.com/romus204/tree-sitter-manager.nvim) and installed a couple languages like `c`, `cpp`, `latex`, `lua` and `python`.
 ```lua
 vim.pack.add {
   "https://github.com/romus204/tree-sitter-manager.nvim"
@@ -242,3 +241,73 @@ require("conform").setup({
 > 
 > You can install tools like `stylua` with `mise use -g stylua` and `lua_ls` with `muse use -g lua-language-server`.
 
+### LSPs
+Neovim's native lsp is powerful, but I still like to have default configs since they are not yet in nvim. So I installed [`nvim-lsp-config`](https://github.com/neovim/nvim-lspconfig) for defaults that I can extend.
+
+I also decided to change the keymaps for something more intuitive to me, like goto definition (`gd`), or code actions (`ca`) or rename (`rn`) like it was used in NvChad.
+
+Finally, I enabled the LSPs I wanted after having installed them with either `mise`, `pip` or `dnf` (in priority). I decided to let `pylsp` manage the linters and formatters since it seemed to simpler to let them work together as intended by the devs. Later I'll add `ltex_plus` to edit Latex files.
+```lua
+vim.pack.add({
+    "https://github.com/neovim/nvim-lspconfig",
+})
+
+local map = vim.keymap.set
+
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+        local opts = function(desc)
+            return { buffer = args.buf, desc = "LSP: " .. desc }
+        end
+
+        -- Navigation
+        map("n", "gd", vim.lsp.buf.definition, opts("Go to Definition"))
+        map("n", "gD", vim.lsp.buf.declaration, opts("Go to Declaration"))
+        map("n", "gi", vim.lsp.buf.implementation, opts("Go to Implementation"))
+        map("n", "gr", vim.lsp.buf.references, opts("Go to References"))
+
+        -- Actions
+        map("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename"))
+        map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts("Code Action"))
+
+        -- Diagnostics
+        map("n", "<leader>df", vim.diagnostic.open_float, opts("Show Diagnostic"))
+        map("n", "<leader>dn", function()
+            vim.diagnostic.jump({ count = 1, float = true })
+        end, opts("Next Diagnostic"))
+        map("n", "<leader>dp", function()
+            vim.diagnostic.jump({ count = -1, float = true })
+        end, opts("Previous Diagnostic"))
+        map("n", "<leader>dl", vim.diagnostic.setloclist, opts("Diagnostics List"))
+    end,
+})
+
+local lsp = vim.lsp
+
+lsp.config("lua_ls", {
+    settings = {
+        Lua = { diagnostics = { globals = { "vim" } } },
+    },
+})
+
+vim.lsp.config("clangd", {
+    cmd = { "clangd", "--enable-config" },
+})
+
+-- pylsp comes with linter and formatter, so simpler to set here together
+vim.lsp.config("pylsp", {
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    ignore = { "E203" },
+                    maxLineLength = 88, -- Black formatter
+                },
+                black = { enabled = true },
+            },
+        },
+    },
+})
+
+lsp.enable({ "lua_ls", "clangd", "pylsp" })
+```
