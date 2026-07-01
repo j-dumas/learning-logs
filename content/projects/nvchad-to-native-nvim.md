@@ -18,7 +18,7 @@ To transform Neovim into the experience I had with NvChad, i.e. close to a full 
 - [x] Colorscheme
 - [x] Statusline
 - [x] Tree
-- [ ] Something to search for files like Telescope or fzf-lua
+- [x] Something to search for files like Telescope or fzf-lua
 - [ ] A Git client to not rely on switching tmux panes for lazygit
 
 ### A Clean Structure
@@ -32,6 +32,7 @@ Let's start with the structure of the config directory:
 	|   ├── conform.lua
 	|   ├── fzf-lua.lua
 	|   ├── lsp.lua
+	|   ├── qol.lua
 	|   ├── tree.lua
 	|   ├── treesitter.lua
 	|   └── ui.lua
@@ -42,7 +43,7 @@ Let's start with the structure of the config directory:
 ```
 
 ### Common Options
-Here are the options I used. These were taken from the NvChad config to have a similar feel and also from [a list of the most common options in Neovim](https://dotfiles.substack.com/p/neovim-options-the-most-common-ones).
+Here are the options I used. These were taken from the NvChad config to have a similar feel and also from [a list of the most common options in Neovim](https://dotfiles.substack.com/p/neovim-options-the-most-common-ones), like tab size splitting directions, clipboard and rounded borders, etc.
 ```lua
 require('vim._core.ui2').enable()
 
@@ -82,7 +83,7 @@ vim.o.winborder = "rounded"
 ```
 
 ### UI: Colorscheme and Statusline
-Here are the two plugins I use for UI: `catppuccin-nvim` and `lualine`
+Here are the three plugins I use for UI: [`catppuccin-nvim`](https://github.com/catppuccin/nvim), [`lualine`](https://github.com/nvim-lualine/lualine.nvim) and some icons with [`nvim-web-devicons`](https://github.com/nvim-tree/nvim-web-devicons).
 ```lua
 vim.pack.add { 
     { 
@@ -93,6 +94,7 @@ vim.pack.add {
     'https://github.com/nvim-lualine/lualine.nvim'
 }
 ```
+
 Since I already use Catppuccin Mocha nearly everywhere, I installed it for Neovim.  For a terminal, I use kitty with a transparent background, so I opted to have Neovim transparent as well. I also modified the colors of the sections to fit my tmux look (which is kind of a bastard between the dracula tmux plugin and catppuccin colors). I changed some highlights to fit my taste, like the `MatchParen` to remove colors of matching brackets and only keep the background highlight.
 ```lua
 require("catppuccin").setup({
@@ -131,6 +133,7 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme "catppuccin-nvim"
 ```
+
 And here is lualine as I like:
 ```lua
 require('lualine').setup({
@@ -214,7 +217,7 @@ require("tree-sitter-manager").setup()
 ```
 
 ### Conform: A Formatter
-I decided to use [Conform](https://github.com/stevearc/conform.nvim) to invoke formatters in my code and set their settings. I started by configuring `stylua` to then format my config files correctly and thus test if everything works.
+I decided to use [`conform`](https://github.com/stevearc/conform.nvim) to invoke formatters in my code and set their settings. I started by configuring `stylua` to then format my config files correctly and thus test if everything works.
 ```lua
 vim.pack.add({
     "https://github.com/stevearc/conform.nvim",
@@ -233,6 +236,10 @@ require("conform").setup({
         },
     },
 })
+
+vim.keymap.set("n", "<leader>fm", function()
+    require("conform").format()
+end, { desc = "Format file" })
 ```
 
 
@@ -310,4 +317,34 @@ vim.lsp.config("pylsp", {
 })
 
 lsp.enable({ "lua_ls", "clangd", "pylsp" })
+```
+
+### Fzf-Lua: a file picker
+I installed [`fzf-lua`](https://github.com/ibhagwan/fzf-lua) instead of Telescope for the speed. I then set it up with the commands I used the most in NvChad, namely finding files, finding in all files starting from home, finding recent files and `live_grep` to find words in files in the project.
+```lua
+vim.pack.add({ "https://github.com/ibhagwan/fzf-lua" })
+
+local fzf = require("fzf-lua")
+fzf.setup({})
+
+local opts = function(desc)
+    return { desc = "FZF: " .. desc }
+end
+
+local map = vim.keymap.set
+map("n", "<leader>ff", fzf.files, opts("Find files"))
+map("n", "<leader>fa", function()
+    fzf.files({ cwd = "~" })
+end, opts("Find all files"))
+map("n", "<leader>fo", fzf.oldfiles, opts("Find recent files"))
+map("n", "<leader>fw", fzf.live_grep, opts("Live grep"))
+map("n", "<leader>fk", fzf.keymaps, opts("Search keymaps"))
+```
+
+### Quality of Life
+For now, I added [`which-key`](https://github.com/folke/which-key.nvim) as a bonus on top of the keymaps listing of `fzf-lua` to help me if I forget a combination.
+```lua
+vim.pack.add({ "https://github.com/folke/which-key.nvim" })
+
+require("which-key").setup({ preset = "helix" })
 ```
