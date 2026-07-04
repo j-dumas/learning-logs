@@ -45,7 +45,7 @@ Let's start with the structure of the config directory:
 ```
 
 ### Common Options
-Here are the options I used. These were taken from the NvChad config to have a similar feel and also from [a list of the most common options in Neovim](https://dotfiles.substack.com/p/neovim-options-the-most-common-ones), like tab size splitting directions, clipboard and rounded borders, etc.
+Here are the options I used. These were taken from the NvChad config to have a similar feel and also from [a list of the most common options in Neovim](https://dotfiles.substack.com/p/neovim-options-the-most-common-ones), like tab size, splitting directions, clipboard and rounded borders, etc.
 ```lua
 require('vim._core.ui2').enable()
 
@@ -155,8 +155,8 @@ require('lualine').setup({
 })
 ```
 
-### Tree: A File Viewer
-I'm used to having a file viewer in the side bar and did not really want to use `netrw`, so I decided to try [`neo-tree`](https://github.com/nvim-neo-tree/neo-tree.nvim). I added `nvim-webdev-icons` and `nvim-window-picker` for icons and picking a specific window when opening a file instead of opening in the last one, respectively. I added nicer colors for the window picker because the default was bright green. It's now red with a transparent background. Finally I changed the mappings to always ask which window to open a file when there are splits.
+### NeoTree: A File Viewer
+I'm used to having a file viewer in the side bar and did not really want to use `netrw`, so I decided to try [`neo-tree`](https://github.com/nvim-neo-tree/neo-tree.nvim). I added  `nvim-window-picker` for picking a specific window when opening a file instead of opening in the last one. I added nicer colors for the window picker because the default was bright green. It's now red with a transparent background. Finally I changed the mappings to always ask which window to open a file when there are splits.
 ```lua
 vim.pack.add({
   {
@@ -166,7 +166,6 @@ vim.pack.add({
   -- Dependencies
   "https://github.com/nvim-lua/plenary.nvim",
   "https://github.com/MunifTanjim/nui.nvim",
-  "https://github.com/nvim-tree/nvim-web-devicons",
   {
       src = 'https://github.com/s1n7ax/nvim-window-picker', 
       version = vim.version.range('2.*') 
@@ -256,7 +255,7 @@ end, { desc = "Format file" })
 
 
 > [!important] Installing tools
-> I mentioned I wanted to get away from `mason` to install tools like LSPs and formatters. I landed on [Mise](https://mise.jdx.dev/) to install the tools I need on my system and get them in the `$PATH` so that Neovim can find them. It works just like using `npm` or `pip`, but with the recent security track record of the former, I did not want to install my tools with it.
+> I mentioned I wanted to get away from `mason` to install tools like LSPs and formatters. I landed on [`mise`](https://mise.jdx.dev/) to install the tools I need on my system and get them in the `$PATH` so that Neovim can find them. It works just like using `npm` or `pip`, but with the recent security track record of the former, I did not want to install my tools with it.
 > 
 > You can install tools like `stylua` with `mise use -g stylua` and `lua_ls` with `muse use -g lua-language-server`.
 
@@ -265,7 +264,7 @@ Neovim's native lsp is powerful, but I still like to have default configs since 
 
 I also decided to change the keymaps for something more intuitive to me, like goto definition (`gd`), or code actions (`ca`) or rename (`rn`) like it was used in NvChad.
 
-Then, I enabled the LSPs I wanted after having installed them with either `mise`, `pip` or `dnf` (in priority). I decided to let `pylsp` manage the linters and formatters since it seemed to simpler to let them work together as intended by the devs. Later I'll add `ltex_plus` to edit Latex files.
+Then, I enabled the LSPs I wanted after having installed them with either `mise`, `pip` or `dnf`. I decided to let `pylsp` manage the linters and formatters since it seemed to simpler to let them work together as intended by the devs, as opposed to C where I'll add `clang-format` and `clang-tidy`. Later I'll add `ltex_plus` to edit Latex files.
 
 Finally, I added [`nvim-file-operations`](https://github.com/Crysthamus/nvim-file-operations) to implement the events emitted by the file manager so that server that can will update import statements and paths.
 ```lua
