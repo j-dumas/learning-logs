@@ -10,16 +10,17 @@ I've wanted for a while now to move from [NvChad](https://nvchad.com/) to a more
 ### What's Needed?
 To transform Neovim into the experience I had with NvChad, i.e. close to a full IDE, I'll need
 
-- [x] LSP
-- [x] Highlight
-- [ ] Autocompletion
-- [x] Formatter
-- [ ] Linter
 - [x] Colorscheme
 - [x] Statusline
 - [x] Tree
-- [x] Something to search for files like Telescope or fzf-lua
-- [ ] A Git client to not rely on switching tmux panes for lazygit
+- [x] Highlight
+- [x] Formatter
+- [x] LSP
+- [x] File picker/live grep
+- [x] Autocompletion
+- [x] A Git client to not rely on switching tmux panes for lazygit
+- [ ] Linter
+- [ ] Debugger
 
 ### A Clean Structure
 Let's start with the structure of the config directory:
@@ -29,7 +30,8 @@ Let's start with the structure of the config directory:
 └── lua/
 	├── plugins/
 	|   ├── init.lua
-	|   ├── conform.lua
+	|   ├── blink.lua
+	|   ├── format.lua
 	|   ├── fzf-lua.lua
 	|   ├── lsp.lua
 	|   ├── qol.lua
@@ -197,6 +199,7 @@ require("neo-tree").setup({
   window = {
     mappings = {
       ["<cr>"] = "open_with_window_picker",
+	  ["<2-LeftMouse>"] = "open_with_window_picker",
       ["s"]    = "split_with_window_picker",
       ["v"]    = "vsplit_with_window_picker",
       ["S"]    = "noop",
@@ -204,6 +207,15 @@ require("neo-tree").setup({
     },
   },
 })
+
+local opts = function(desc)
+            return { desc = "Neotree: " .. desc }
+        end
+local map = vim.keymap.set
+
+map("n", "<C-n>", "<cmd>Neotree toggle reveal=true<cr>", opts("Toggle Explorer"))
+map("n", "<leader>e", "<cmd>Neotree focus", opts("Focus Explorer"))
+map("n", "<leader>b", "<cmd>Neotree focus source=buffers<cr>", opts("Focus Buffers"))
 ```
 
 ### Treesitter: Better Highlighting and Parsers
@@ -253,7 +265,9 @@ Neovim's native lsp is powerful, but I still like to have default configs since 
 
 I also decided to change the keymaps for something more intuitive to me, like goto definition (`gd`), or code actions (`ca`) or rename (`rn`) like it was used in NvChad.
 
-Finally, I enabled the LSPs I wanted after having installed them with either `mise`, `pip` or `dnf` (in priority). I decided to let `pylsp` manage the linters and formatters since it seemed to simpler to let them work together as intended by the devs. Later I'll add `ltex_plus` to edit Latex files.
+Then, I enabled the LSPs I wanted after having installed them with either `mise`, `pip` or `dnf` (in priority). I decided to let `pylsp` manage the linters and formatters since it seemed to simpler to let them work together as intended by the devs. Later I'll add `ltex_plus` to edit Latex files.
+
+Finally, I added [`nvim-file-operations`](https://github.com/Crysthamus/nvim-file-operations) to implement the events emitted by the file manager so that server that can will update import statements and paths.
 ```lua
 vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
@@ -317,9 +331,14 @@ vim.lsp.config("pylsp", {
 })
 
 lsp.enable({ "lua_ls", "clangd", "pylsp" })
+
+require("nvim-file-operations").setup()
+vim.lsp.config("*", {
+  capabilities = require("nvim-file-operations.config").default_capabilities(),
+})
 ```
 
-### Fzf-Lua: a file picker
+### Fzf-Lua: A File Picker
 I installed [`fzf-lua`](https://github.com/ibhagwan/fzf-lua) instead of Telescope for the speed. I then set it up with the commands I used the most in NvChad, namely finding files, finding in all files starting from home, finding recent files and `live_grep` to find words in files in the project.
 ```lua
 vim.pack.add({ "https://github.com/ibhagwan/fzf-lua" })
@@ -338,13 +357,85 @@ map("n", "<leader>fa", function()
 end, opts("Find all files"))
 map("n", "<leader>fo", fzf.oldfiles, opts("Find recent files"))
 map("n", "<leader>fw", fzf.live_grep, opts("Live grep"))
-map("n", "<leader>fk", fzf.keymaps, opts("Search keymaps"))
+map("n", "<leader>fk", fzf.keymaps, opts("Find keymaps"))
+map("n", "<leader>fb", fzf.buffers, opts("Find buffers"))
+```
+
+### Blink: Autocompletion
+I used [`blink`](https://github.com/Saghen/blink.cmp), the newer, faster completion plugin, to have completion and snippets sourced from LSPs. I modified a bit the keymaps to my liking using enter to accept a completion and tab to move inside the list. Finally, I added the capabilities of blink to the LSPs.
+```lua
+vim.pack.add({ { src = "https://github.com/Saghen/blink.cmp", version = "v1" } })
+
+local blink = require("blink.cmp")
+blink.setup({
+    keymap = {
+        preset = "enter",
+
+        ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+
+        ["<Up>"] = false,
+        ["<Down>"] = false,
+        ["<C-p>"] = false,
+        ["<C-n>"] = false,
+    },
+    completion = {
+        list = {
+            selection = { preselect = false, auto_insert = true },
+        },
+    },
+})
+
+vim.lsp.config("*", {
+  capabilities = blink.get_lsp_capabilities(),
+})
 ```
 
 ### Quality of Life
-For now, I added [`which-key`](https://github.com/folke/which-key.nvim) as a bonus on top of the keymaps listing of `fzf-lua` to help me if I forget a combination.
+For now, I added [`which-key`](https://github.com/folke/which-key.nvim) as a bonus on top of the keymaps listing of `fzf-lua` to help me if I forget a combination. I then added [`nvim-autopairs`](https://github.com/windwp/nvim-autopairs) to automatically close brackets and parentheses.
 ```lua
-vim.pack.add({ "https://github.com/folke/which-key.nvim" })
+vim.pack.add({
+    "https://github.com/folke/which-key.nvim",
+    "https://github.com/windwp/nvim-autopairs",
+})
 
 require("which-key").setup({ preset = "helix" })
+require("nvim-autopairs").setup({})
+```
+
+### Git Client
+I added [`gitsigns`](https://github.com/lewis6991/gitsigns.nvim) to show lines that have been changes in the buffers and added the [`lazygit` nvim plugin](https://github.com/kdheepak/lazygit.nvim) to toggle a floating Lazygit terminal. I'm already used to Lazygit, but this plugins makes it so I can 1) use it in the same window and 2) open the files in conflicts inside the same Neovim instance.
+```lua
+vim.pack.add({
+    "https://github.com/lewis6991/gitsigns.nvim",
+    "https://github.com/kdheepak/lazygit.nvim",
+})
+
+vim.keymap.set("n", "<leader>g", "<cmd>LazyGit<cr>", { desc = "Open Lazygit" })
+```
+
+### Keymaps
+Finally, here are some general keymaps I like. They are taken directly from NvChad.
+```lua
+local map = vim.keymap.set
+
+map("n", "<Esc>", "<cmd>noh<CR>", { silent = true, desc = "Clear highlights" })
+
+-- Moving in insert mode
+map("i", "<C-b>", "<ESC>^i", { desc = "Move beginning of line" })
+map("i", "<C-e>", "<End>", { desc = "Move end of line" })
+map("i", "<C-h>", "<Left>", { desc = "Move left" })
+map("i", "<C-l>", "<Right>", { desc = "Move right" })
+map("i", "<C-j>", "<Down>", { desc = "Move down" })
+map("i", "<C-k>", "<Up>", { desc = "Move up" })
+
+-- Moving in panes
+map("n", "<C-h>", "<C-w>h", { desc = "Switch pane left" })
+map("n", "<C-l>", "<C-w>l", { desc = "Switch pane right" })
+map("n", "<C-j>", "<C-w>j", { desc = "Switch pane down" })
+map("n", "<C-k>", "<C-w>k", { desc = "Switch pane up" })
+
+-- Comments
+map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
+map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
 ```
