@@ -30,7 +30,7 @@ Let's start with the structure of the config directory:
 └── lua/
 	├── plugins/
 	|   ├── init.lua
-	|   ├── blink.lua
+	|   ├── cmp.lua
 	|   ├── format.lua
 	|   ├── fzf-lua.lua
 	|   ├── lsp.lua
@@ -266,6 +266,8 @@ I also decided to change the keymaps for something more intuitive to me, like go
 
 Then, I enabled the LSPs I wanted after having installed them with either `mise`, `pip` or `dnf`. I decided to let `pylsp` manage the linters and formatters since it seemed to simpler to let them work together as intended by the devs, as opposed to C where I'll add `clang-format` and `clang-tidy`. Later I'll add `ltex_plus` to edit Latex files.
 
+I also added virtual lines to show error diagnostic under the errors. We'll see if I keep it or if it is too cluttering.
+
 Finally, I added [`nvim-file-operations`](https://github.com/Crysthamus/nvim-file-operations) to implement the events emitted by the file manager so that server that can will update import statements and paths.
 ```lua
 vim.pack.add({
@@ -331,10 +333,20 @@ vim.lsp.config("pylsp", {
 
 lsp.enable({ "lua_ls", "clangd", "pylsp" })
 
+vim.diagnostic.config({
+    virtual_lines = {
+        format = function(diagnostic)
+            -- Only show the message, hide the code
+            return diagnostic.message
+        end,
+    },
+})
+
 require("nvim-file-operations").setup()
 vim.lsp.config("*", {
-  capabilities = require("nvim-file-operations.config").default_capabilities(),
+    capabilities = require("nvim-file-operations.config").default_capabilities(),
 })
+
 ```
 
 ### Fzf-Lua: A File Picker
@@ -438,3 +450,7 @@ map("n", "<C-k>", "<C-w>k", { desc = "Switch pane up" })
 map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
 ```
+
+## Conclusion
+---
+This rewrite of my config allowed me to have a clean and minimal configuration of my Neovim and learn a bit more about the new features of the 0.12+ version. Everything else I'll add will be in my dotfiles but not detailed here, things like vimtex and other plugins I land on in my researchs.
