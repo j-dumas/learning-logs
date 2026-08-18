@@ -1,5 +1,4 @@
 # Learning Zig
-- [[#^989022|Overview]]
 - Zig Book
 	- [[Introducing Zig]]
 	- ...
@@ -7,17 +6,15 @@
 	- ...
 
 ## [Overview](https://ziglang.org/learn/overview/) of features
-^989022
-
 ### Control Flow
 Zig has no **hidden control flow** or any other hidden allocations and no preprocessor like C nor macros. They give a few examples, like 
-- decorators like @property from D that are called when the field is accessed;
+- decorators like `@property` from D that are called when the field is accessed;
 - function overloading from C++ and Rust;
 - exceptions throwing and catching that might prevent other functions from being called.
 All of  these are functions that are not explicitly called and can cause unwanted side effects, while Zig promotes code maintenance and readability.
 
 ### Build mode
-Zig's build mode let's you decide between two parameters: optimization and safety. With the combination of those two, you can have the following build modes: Debug (no optimizations), ReleaseSafe (optimizations and safety checks), ReleaseFast (no safety checks) and ReleaseSmall (size optimizations and no safety checks). This permits targeting different plateforms and goals.
+Zig's build mode let's you decide between two parameters: optimization and safety. With the combination of those two, you can have the following build modes: `Debug` (no optimizations), `ReleaseSafe` (optimizations and safety checks), `ReleaseFast` (no safety checks) and `ReleaseSmall` (size optimizations and no safety checks). This permits targeting different plateforms and goals.
 
 ### C improvements
 Zig also claims a couple improvements over C. I'll have to test them later.
